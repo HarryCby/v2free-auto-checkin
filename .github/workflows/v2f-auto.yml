@@ -1,0 +1,33 @@
+name: V2Free Auto Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */24 * * *'
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 拉取代码
+      uses: actions/checkout@v4
+    
+    - name: 安装Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install playwright python-dotenv
+        playwright install chromium
+        playwright install-deps
+    
+    - name: 运行签到脚本
+      env:
+        V2F_EMAIL: ${{ secrets.V2F_EMAIL }}
+        V2F_PASSWORD: ${{ secrets.V2F_PASSWORD }}
+      run: |
+        python v2f-check.py
