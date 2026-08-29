@@ -10,7 +10,7 @@ async def login():
     # 从环境变量读取
     email = os.environ.get('V2F_EMAIL')
     password = os.environ.get('V2F_PASSWORD')
-
+    url=os.environ.get('V2F_URL')
     # 调试：打印是否读取到（但不要打印密码值！）
     print(f"email: {'be set' if email else 'not be set'}")
     print(f"pswd: {'be set' if password else 'not be set'}")
@@ -23,7 +23,7 @@ async def login():
         browser = await playwright.chromium.launch(headless=True)
         page = await browser.new_page()
 
-        await page.goto("https://cdn.v2ai.top/auth/login")
+        await page.goto(url)
         await page.wait_for_load_state("networkidle")
 
         email_input = page.locator('#email')
