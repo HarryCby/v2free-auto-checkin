@@ -29,5 +29,6 @@ jobs:
       env:
         V2F_EMAIL: ${{ secrets.V2F_EMAIL }}
         V2F_PASSWORD: ${{ secrets.V2F_PASSWORD }}
+        V2F_URL: ${{ secrets.V2F_URL }}
       run: |
         python v2f-check.py
